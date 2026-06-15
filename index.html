@@ -6,14 +6,10 @@
   <meta name="description" content="It'z Kushal Electric - Professional Electrician Services" />
   <title>It'z Kushal Electric | Professional Electrician</title>
   
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  
-  <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   
   <style>
-    /* ===== CSS Starts Here ===== */
     :root {
       --bg: #07111f;
       --panel: #0d1a33;
@@ -22,23 +18,20 @@
       --accent: #ffbf1f;
       --accent-hover: #ffcf3f;
       --success: #00d9a5;
-      --error: #ff6b6b;
       --radius: 12px;
-      --shadow: 0 8px 24px rgba(0,0,0,0.3);
     }
     
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(180deg, var(--bg) 0%, #0a0f1c 100%);
+      background: linear-gradient(180deg, var(--bg), #0a0f1c);
       color: var(--text);
       min-height: 100vh;
-      line-height: 1.6;
     }
     
     header {
-      background: linear-gradient(180deg, rgba(12,23,44,0.98), rgba(7,14,28,0.95));
+      background: rgba(12,23,44,0.98);
       padding: 1rem 5%;
       position: sticky;
       top: 0;
@@ -47,7 +40,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 1rem;
     }
     
     .brand {
@@ -57,25 +49,18 @@
       font-size: 1.5rem;
       font-weight: 700;
       color: var(--accent);
-      text-decoration: none;
     }
     
     .brand i { font-size: 1.8rem; }
     
-    .lang-switch {
-      background: var(--panel);
-      border: 1px solid rgba(255,191,31,0.3);
-      color: var(--text);
+    .lang-btn {
+      background: var(--accent);
+      color: var(--bg);
       padding: 0.5rem 1rem;
       border-radius: var(--radius);
       cursor: pointer;
-      font-weight: 500;
-      transition: all 0.3s;
-    }
-    
-    .lang-switch:hover {
-      background: var(--accent);
-      color: var(--bg);
+      font-weight: 600;
+      border: none;
     }
     
     .hero {
@@ -85,19 +70,17 @@
     }
     
     .hero h1 {
-      font-size: 2.8rem;
+      font-size: 2.5rem;
       font-weight: 700;
       margin-bottom: 1rem;
-      line-height: 1.2;
     }
     
     .hero h1 span { color: var(--accent); }
     
     .hero p {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: var(--muted);
       margin-bottom: 2rem;
-      max-width: 600px;
     }
     
     .cta-buttons {
@@ -112,7 +95,6 @@
       border-radius: var(--radius);
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s;
       border: none;
       font-size: 1rem;
       display: inline-flex;
@@ -125,18 +107,10 @@
       color: var(--bg);
     }
     
-    .btn-primary:hover {
-      background: var(--accent-hover);
-      transform: translateY(-2px);
+    .btn-call {
+      background: #25D366;
+      color: white;
     }
-    
-    .btn-secondary {
-      background: var(--panel);
-      color: var(--text);
-      border: 1px solid rgba(255,191,31,0.3);
-    }
-    
-    .btn-secondary:hover { background: rgba(255,191,31,0.2); }
     
     .services { padding: 3rem 5%; }
     
@@ -168,7 +142,6 @@
     .service-card:hover {
       transform: translateY(-5px);
       border-color: var(--accent);
-      box-shadow: var(--shadow);
     }
     
     .service-card .icon {
@@ -196,7 +169,7 @@
       margin-bottom: 1rem;
     }
     
-    .book-now-btn {
+    .book-btn {
       background: var(--accent);
       color: var(--bg);
       padding: 0.6rem 1.2rem;
@@ -206,8 +179,6 @@
       border: none;
       font-size: 0.9rem;
     }
-    
-    .book-now-btn:hover { background: var(--accent-hover); }
     
     .gallery {
       padding: 3rem 5%;
@@ -260,11 +231,11 @@
       margin-bottom: 1rem;
     }
     
-    .reviewer-name { font-weight: 600; font-size: 1.1rem; }
+    .reviewer-name { font-weight: 600; }
     
-    .review-stars { color: var(--accent); font-size: 1.1rem; }
+    .review-stars { color: var(--accent); }
     
-    .review-text { color: var(--muted); line-height: 1.7; }
+    .review-text { color: var(--muted); }
     
     .add-review-btn {
       display: block;
@@ -279,9 +250,67 @@
       margin-top: 1rem;
     }
     
-    .add-review-btn:hover { background: rgba(255,191,31,0.2); }
+    .contact {
+      padding: 3rem 5%;
+      background: var(--panel);
+      margin: 2rem 5%;
+      border-radius: var(--radius);
+    }
     
-    .booking-modal {
+    .contact-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--bg);
+      border-radius: var(--radius);
+    }
+    
+    .contact-item i {
+      font-size: 1.5rem;
+      color: var(--accent);
+    }
+    
+    .contact-item a {
+      color: var(--text);
+      text-decoration: none;
+    }
+    
+    footer {
+      background: var(--panel);
+      padding: 2rem 5%;
+      text-align: center;
+      border-top: 1px solid rgba(255,191,31,0.2);
+    }
+    
+    footer p { color: var(--muted); }
+    
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.8rem;
+      cursor: pointer;
+      z-index: 999;
+    }
+    
+    .modal {
       display: none;
       position: fixed;
       top: 0;
@@ -295,9 +324,9 @@
       padding: 1rem;
     }
     
-    .booking-modal.active { display: flex; }
+    .modal.active { display: flex; }
     
-    .booking-content {
+    .modal-content {
       background: var(--panel);
       border-radius: var(--radius);
       padding: 2rem;
@@ -307,7 +336,7 @@
       position: relative;
     }
     
-    .booking-content h2 {
+    .modal-content h2 {
       font-size: 1.8rem;
       margin-bottom: 1.5rem;
       color: var(--accent);
@@ -333,9 +362,7 @@
       font-family: 'Poppins', sans-serif;
     }
     
-    .form-group textarea { resize: vertical; min-height: 80px; }
-    
-    .close-book {
+    .close-modal {
       position: absolute;
       top: 1rem;
       right: 1rem;
@@ -344,37 +371,6 @@
       color: var(--muted);
       font-size: 1.5rem;
       cursor: pointer;
-    }
-    
-    .review-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem;
-    }
-    
-    .review-modal.active { display: flex; }
-    
-    .review-content {
-      background: var(--panel);
-      border-radius: var(--radius);
-      padding: 2rem;
-      max-width: 500px;
-      width: 100%;
-      border: 1px solid rgba(255,191,31,0.3);
-    }
-    
-    .review-content h2 {
-      font-size: 1.8rem;
-      margin-bottom: 1.5rem;
-      color: var(--accent);
     }
     
     .star-rating {
@@ -387,143 +383,41 @@
     .star {
       cursor: pointer;
       color: var(--muted);
-      transition: color 0.3s;
     }
     
     .star.active { color: var(--accent); }
     
-    .close-review {
-      background: var(--panel);
-      border: 1px solid rgba(255,191,31,0.3);
-      color: var(--text);
-      padding: 0.8rem 1.5rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      margin-top: 1rem;
-      width: 100%;
-    }
-    
-    .photo-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.95);
-      z-index: 1001;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem;
-    }
-    
-    .photo-modal.active { display: flex; }
-    
-    .photo-modal img {
-      max-width: 90%;
-      max-height: 90%;
-      object-fit: contain;
-      border-radius: var(--radius);
-    }
-    
-    .close-photo {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: none;
-      border: none;
-      color: var(--text);
-      font-size: 2rem;
-      cursor: pointer;
-    }
-    
-    .map { padding: 3rem 5%; }
-    
-    .map-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      border-radius: var(--radius);
-      overflow: hidden;
-      border: 1px solid rgba(255,191,31,0.3);
-    }
-    
-    .map-container iframe {
-      width: 100%;
-      height: 400px;
-      border: none;
-    }
-    
-    footer {
-      background: var(--panel);
-      padding: 2rem 5%;
-      text-align: center;
-      border-top: 1px solid rgba(255,191,31,0.2);
-      margin-top: 3rem;
-    }
-    
-    footer p { color: var(--muted); }
-    
-    footer .contact { margin-top: 1rem; font-size: 1.1rem; }
-    
-    footer .contact i { color: var(--accent); margin-right: 0.5rem; }
-    
-    .whatsapp-btn {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 60px;
-      height: 60px;
-      background: #25D366;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 1.8rem;
-      cursor: pointer;
-      z-index: 999;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: all 0.3s;
-    }
-    
-    .whatsapp-btn:hover { transform: scale(1.1); }
-    
     @media (max-width: 768px) {
       .hero h1 { font-size: 2rem; }
-      .hero p { font-size: 1rem; }
       .services-grid { grid-template-columns: 1fr; }
       .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-      header { padding: 0.8rem 5%; }
-      .brand { font-size: 1.2rem; }
-      .btn { padding: 0.7rem 1.5rem; }
+      .contact-info { grid-template-columns: 1fr; }
     }
-    /* ===== CSS Ends Here ===== */
   </style>
 </head>
 <body>
   <!-- Header -->
   <header>
-    <a href="#" class="brand">
+    <div class="brand">
       <i class="fas fa-bolt"></i>
       <span id="brandText">It'z Kushal Electric</span>
-    </a>
-    <button class="lang-switch" onclick="toggleLanguage()" id="langBtn">
+    </div>
+    <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">
       <i class="fas fa-language"></i> <span id="langText">বাংলা</span>
     </button>
   </header>
   
-  <!-- Hero Section -->
+  <!-- Hero -->
   <section class="hero">
     <h1 id="heroTitle">Your <span>TRUSTED</span> Professional Electrician</h1>
-    <p id="heroDesc">Professional electrician services for home & office wiring, AC installation, CCTV, and more</p>
+    <p id="heroDesc">Professional electrician services for home & office wiring, AC, CCTV, and more</p>
     <div class="cta-buttons">
       <button class="btn btn-primary" onclick="showBooking('General Service')" id="bookBtn">
-        <i class="fas fa-calendar-check"></i> <span id="bookText">Book Now</span>
+        <i class="fas fa-calendar-check"></i> <span id="bookBtnText">Book Now</span>
       </button>
-      <button class="btn btn-secondary" onclick="document.getElementById('services').scrollIntoView({behavior: 'smooth'})" id="servicesBtn">
-        <i class="fas fa-tools"></i> <span id="servicesText">Our Services</span>
-      </button>
+      <a href="tel:+910000000000" class="btn btn-call">
+        <i class="fas fa-phone"></i> <span id="callBtnText">Call Now</span>
+      </a>
     </div>
   </section>
   
@@ -550,42 +444,68 @@
     </div>
   </section>
   
-  <!-- Google Map -->
-  <section class="map">
-    <h2 class="section-title" id="mapTitle">Our Location</h2>
-    <div class="map-container">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12095.4!2d23.4!3d23.4!4m2!3m1!1s0x0:0x0!5e1!1e2!2b1!3e3!6m1!1e1!8m2!3d23.4!4d120.95!15sCg0yMy40LDEyMC45NTrkAa9lbGVjdHJpY2lhbiIkGhIQbWtfcGVyc29uX25hbWV9a2V5OtABN2" 
-        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-      </iframe>
+  <!-- Contact -->
+  <section class="contact">
+    <h2 class="section-title" id="contactTitle">Contact Us</h2>
+    <div class="contact-info">
+      <div class="contact-item">
+        <i class="fas fa-phone"></i>
+        <div>
+          <strong id="phoneLabel">Phone</strong>
+          <a href="tel:+910000000000" id="phoneValue">+91 00000 00000</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-envelope"></i>
+        <div>
+          <strong id="emailLabel">Email</strong>
+          <a href="mailto:itzkushalmondal@gmail.com" id="emailValue">itzkushalmondal@gmail.com</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-whatsapp"></i>
+        <div>
+          <strong id="whatsappLabel">WhatsApp</strong>
+          <a href="https://wa.me/910000000000" id="whatsappValue">+91 00000 00000</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <div>
+          <strong id="addressLabel">Address</strong>
+          <span id="addressValue">Purbba Ichapur, West Bengal, India</span>
+        </div>
+      </div>
     </div>
   </section>
   
   <!-- Footer -->
   <footer>
     <p id="footerText">© 2026 It'z Kushal Electric. All rights reserved.</p>
-    <div class="contact">
-      <i class="fas fa-phone"></i> <span id="phoneText">Call: +91 XXXXXXXXXX</span>
-    </div>
   </footer>
   
-  <!-- WhatsApp Button -->
+  <!-- WhatsApp Float Button -->
   <div class="whatsapp-btn" onclick="window.open('https://wa.me/910000000000', '_blank')">
     <i class="fas fa-whatsapp"></i>
   </div>
   
   <!-- Booking Modal -->
-  <div class="booking-modal" id="bookingModal">
-    <div class="booking-content">
-      <button class="close-book" onclick="closeBooking()">&times;</button>
+  <div class="modal" id="bookingModal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeBooking()">&times;</button>
       <h2 id="bookingTitle">Book Our Service</h2>
-      <form id="bookingForm" onsubmit="submitBooking()">
+      <form onsubmit="submitBooking()">
         <div class="form-group">
           <label id="nameLabel">Your Name</label>
           <input type="text" id="name" required placeholder="Enter your name" />
         </div>
         <div class="form-group">
-          <label id="phoneLabel">Phone Number</label>
+          <label id="phoneLabel2">Phone Number</label>
           <input type="tel" id="phone" required placeholder="+91 XXXXXXXXXX" />
+        </div>
+        <div class="form-group">
+          <label id="emailLabel2">Email</label>
+          <input type="email" id="email" required placeholder="your@email.com" />
         </div>
         <div class="form-group">
           <label id="serviceLabel">Service</label>
@@ -606,7 +526,7 @@
           </select>
         </div>
         <div class="form-group">
-          <label id="addressLabel">Address</label>
+          <label id="addressLabel2">Address</label>
           <textarea id="address" required placeholder="Enter your address"></textarea>
         </div>
         <div class="form-group">
@@ -621,9 +541,10 @@
   </div>
   
   <!-- Review Modal -->
-  <div class="review-modal" id="reviewModal">
-    <div class="review-content">
-      <h2 id="reviewModalTitle">Add Your Review</h2>
+  <div class="modal" id="reviewModal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeReview()">&times;</button>
+      <h2 id="reviewTitle">Add Your Review</h2>
       <div class="star-rating">
         <span class="star" onclick="setStar(1)"><i class="fas fa-star"></i></span>
         <span class="star" onclick="setStar(2)"><i class="fas fa-star"></i></span>
@@ -639,65 +560,108 @@
         <label id="reviewTextLabel">Your Review</label>
         <textarea id="reviewText" placeholder="Write your review" style="min-height: 100px;"></textarea>
       </div>
-      <button class="close-review" onclick="submitReview()" id="submitReviewBtn">
+      <button class="btn btn-primary" onclick="submitReview()" style="width: 100%" id="submitReviewBtn">
         <i class="fas fa-paper-plane"></i> <span id="submitReviewText">Submit Review</span>
       </button>
     </div>
   </div>
   
-  <!-- Photo Modal -->
-  <div class="photo-modal" id="photoModal">
-    <button class="close-photo" onclick="closePhoto()">&times;</button>
-    <img id="modalImg" src="" alt="Gallery Photo" />
-  </div>
-  
   <script>
-    // ===== JavaScript Starts Here =====
-    
-    // Translation
+    // ===== Translation =====
     const T = {
       en: {
         brand: "It'z Kushal Electric",
         lang: "বাংলা",
         heroTitle: "Your <span>TRUSTED</span> Professional Electrician",
-        heroDesc: "Professional electrician services for home & office wiring, AC installation, CCTV, and more",
+        heroDesc: "Professional electrician services for home & office wiring, AC, CCTV, and more",
         bookBtn: "Book Now",
-        servicesBtn: "Our Services",
+        callBtn: "Call Now",
         servicesTitle: "Our Services",
         galleryTitle: "Our Gallery",
         reviewsTitle: "Customer Reviews",
         addReviewBtn: "<i class='fas fa-star'></i> Add Your Review",
-        mapTitle: "Our Location",
+        contactTitle: "Contact Us",
+        phoneLabel: "Phone",
+        emailLabel: "Email",
+        whatsappLabel: "WhatsApp",
+        addressLabel: "Address",
         footerText: "© 2026 It'z Kushal Electric. All rights reserved.",
-        phoneText: "Call: +91 XXXXXXXXXX",
         bookingTitle: "Book Our Service",
         nameLabel: "Your Name",
-        phoneLabel: "Phone Number",
+        phoneLabel2: "Phone Number",
+        emailLabel2: "Email",
         serviceLabel: "Service",
-        addressLabel: "Address",
+        addressLabel2: "Address",
         dateLabel: "Preferred Date",
         submitText: "Submit Booking",
-        reviewModalTitle: "Add Your Review",
+        reviewTitle: "Add Your Review",
         reviewNameLabel: "Your Name",
         reviewTextLabel: "Your Review",
-        submitReviewText: "Submit Review"
+        submitReviewText: "Submit Review",
+        bookNow: "Book Now"
       },
       bn: {
         brand: "ইট্জ কুশাল ইলেক্ট্রিক",
         lang: "ENGLISH",
         heroTitle: "আপনার <span>নির্ভরযোগ্য</span> প্রফেশনাল ইলেক্ট্রিশিয়ান",
-        heroDesc: "হোম ও অফিস ওয়্যারিং, AC ইনস্টলেশন, CCTV এবং আরও প্রফেশনাল ইলেক্ট্রিশিয়ান সার্ভিস",
+        heroDesc: "হোম ও অফিস ওয়্যারিং, AC, CCTV এবং আরও প্রফেশনাল ইলেক্ট্রিশিয়ান সার্ভিস",
         bookBtn: "বুক করুন",
-        servicesBtn: "আমাদের সার্ভিস",
+        callBtn: "কল করুন",
         servicesTitle: "আমাদের সার্ভিস",
         galleryTitle: "আমাদের গ্যালারি",
         reviewsTitle: "কাস্টমার রিভিউ",
         addReviewBtn: "<i class='fas fa-star'></i> আপনার রিভিউ দিন",
-        mapTitle: "আমার লোকেশন",
+        contactTitle: "যোগাযোগ করুন",
+        phoneLabel: "ফোন",
+        emailLabel: "ইমেইল",
+        whatsappLabel: "হোয়াটসঅ্যাপ",
+        addressLabel: "ঠিকানা",
         footerText: "© 2026 ইট্জ কুশাল ইলেক্ট্রিক. সর্বস্বত্ব সংরক্ষিত.",
-        phoneText: "কল: +91 XXXXXXXXXX",
         bookingTitle: "আমার সার্ভিস বুক করুন",
         nameLabel: "আপনার নাম",
-        phoneLabel: "ফোন নম্বর",
+        phoneLabel2: "ফোন নম্বর",
+        emailLabel2: "ইমেইল",
         serviceLabel: "সার্ভিস",
-        ad
+        addressLabel2: "ঠিকানা",
+        dateLabel: "পছন্দের দিন",
+        submitText: "বুকিং সাবমিট করুন",
+        reviewTitle: "আপনার রিভিউ দিন",
+        reviewNameLabel: "আপনার নাম",
+        reviewTextLabel: "আপনার রিভিউ",
+        submitReviewText: "রিভিউ সাবমিট করুন",
+        bookNow: "বুক করুন"
+      }
+    };
+    
+    let currentLang = 'en';
+    
+    function toggleLanguage() {
+      currentLang = currentLang === 'en' ? 'bn' : 'en';
+      updateLanguage();
+    }
+    
+    function updateLanguage() {
+      const lang = T[currentLang];
+      
+      // Update all text
+      document.getElementById('brandText').textContent = lang.brand;
+      document.getElementById('langText').textContent = lang.lang;
+      document.getElementById('heroTitle').innerHTML = lang.heroTitle;
+      document.getElementById('heroDesc').textContent = lang.heroDesc;
+      document.getElementById('bookBtnText').textContent = lang.bookBtn;
+      document.getElementById('callBtnText').textContent = lang.callBtn;
+      document.getElementById('servicesTitle').textContent = lang.servicesTitle;
+      document.getElementById('galleryTitle').textContent = lang.galleryTitle;
+      document.getElementById('reviewsTitle').textContent = lang.reviewsTitle;
+      document.getElementById('addReviewBtn').innerHTML = lang.addReviewBtn;
+      document.getElementById('contactTitle').textContent = lang.contactTitle;
+      document.getElementById('phoneLabel').textContent = lang.phoneLabel;
+      document.getElementById('emailLabel').textContent = lang.emailLabel;
+      document.getElementById('whatsappLabel').textContent = lang.whatsappLabel;
+      document.getElementById('addressLabel').textContent = lang.addressLabel;
+      document.getElementById('footerText').textContent = lang.footerText;
+      document.getElementById('bookingTitle').textContent = lang.bookingTitle;
+      document.getElementById('nameLabel').textContent = lang.nameLabel;
+      document.getElementById('phoneLabel2').textContent = lang.phoneLabel2;
+      document.getElementById('emailLabel2').textContent = lang.emailLabel2;
+      document.getElementById('servic
