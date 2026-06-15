@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="It'z Kushal Electric - Professional Electrician Services in West Bengal" />
+  <meta name="description" content="It'z Kushal Electric - Professional Electrician Services" />
   <title>It'z Kushal Electric | Professional Electrician</title>
   
   <!-- Google Fonts -->
@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   
   <style>
+    /* ===== CSS Starts Here ===== */
     :root {
       --bg: #07111f;
       --panel: #0d1a33;
@@ -36,9 +37,8 @@
       line-height: 1.6;
     }
     
-    /* Header */
     header {
-      background: linear-gradient(180deg, rgba(12,23,44,0.98) 0%, rgba(7,14,28,0.95) 100%);
+      background: linear-gradient(180deg, rgba(12,23,44,0.98), rgba(7,14,28,0.95));
       padding: 1rem 5%;
       position: sticky;
       top: 0;
@@ -78,7 +78,6 @@
       color: var(--bg);
     }
     
-    /* Hero Section */
     .hero {
       padding: 4rem 5% 3rem;
       text-align: center;
@@ -139,7 +138,6 @@
     
     .btn-secondary:hover { background: rgba(255,191,31,0.2); }
     
-    /* Services */
     .services { padding: 3rem 5%; }
     
     .section-title {
@@ -165,7 +163,6 @@
       border: 1px solid rgba(255,191,31,0.2);
       transition: all 0.3s;
       cursor: pointer;
-      position: relative;
     }
     
     .service-card:hover {
@@ -208,12 +205,10 @@
       cursor: pointer;
       border: none;
       font-size: 0.9rem;
-      transition: all 0.3s;
     }
     
     .book-now-btn:hover { background: var(--accent-hover); }
     
-    /* Gallery */
     .gallery {
       padding: 3rem 5%;
       background: var(--panel);
@@ -246,13 +241,9 @@
     
     .gallery-item:hover img { transform: scale(1.1); }
     
-    /* Reviews */
     .reviews { padding: 3rem 5%; }
     
-    .reviews-container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
+    .reviews-container { max-width: 800px; margin: 0 auto; }
     
     .review-card {
       background: var(--panel);
@@ -286,12 +277,10 @@
       cursor: pointer;
       font-weight: 600;
       margin-top: 1rem;
-      transition: all 0.3s;
     }
     
     .add-review-btn:hover { background: rgba(255,191,31,0.2); }
     
-    /* Booking Form */
     .booking-modal {
       display: none;
       position: fixed;
@@ -329,9 +318,7 @@
     .form-group label {
       display: block;
       margin-bottom: 0.5rem;
-      font-weight
-
-: 500;
+      font-weight: 500;
     }
     
     .form-group input,
@@ -359,7 +346,6 @@
       cursor: pointer;
     }
     
-    /* Review Modal */
     .review-modal {
       display: none;
       position: fixed;
@@ -418,7 +404,6 @@
       width: 100%;
     }
     
-    /* Photo Modal */
     .photo-modal {
       display: none;
       position: fixed;
@@ -453,7 +438,6 @@
       cursor: pointer;
     }
     
-    /* Google Map */
     .map { padding: 3rem 5%; }
     
     .map-container {
@@ -470,7 +454,6 @@
       border: none;
     }
     
-    /* Footer */
     footer {
       background: var(--panel);
       padding: 2rem 5%;
@@ -485,7 +468,6 @@
     
     footer .contact i { color: var(--accent); margin-right: 0.5rem; }
     
-    /* WhatsApp Button */
     .whatsapp-btn {
       position: fixed;
       bottom: 2rem;
@@ -501,15 +483,12 @@
       font-size: 1.8rem;
       cursor: pointer;
       z-index: 999;
-      box-shadow: 0 4px 12px rgba
-
-(0,0,0,0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       transition: all 0.3s;
     }
     
     .whatsapp-btn:hover { transform: scale(1.1); }
     
-    /* Mobile Responsive */
     @media (max-width: 768px) {
       .hero h1 { font-size: 2rem; }
       .hero p { font-size: 1rem; }
@@ -519,6 +498,7 @@
       .brand { font-size: 1.2rem; }
       .btn { padding: 0.7rem 1.5rem; }
     }
+    /* ===== CSS Ends Here ===== */
   </style>
 </head>
 <body>
@@ -528,3 +508,196 @@
       <i class="fas fa-bolt"></i>
       <span id="brandText">It'z Kushal Electric</span>
     </a>
+    <button class="lang-switch" onclick="toggleLanguage()" id="langBtn">
+      <i class="fas fa-language"></i> <span id="langText">বাংলা</span>
+    </button>
+  </header>
+  
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1 id="heroTitle">Your <span>TRUSTED</span> Professional Electrician</h1>
+    <p id="heroDesc">Professional electrician services for home & office wiring, AC installation, CCTV, and more</p>
+    <div class="cta-buttons">
+      <button class="btn btn-primary" onclick="showBooking('General Service')" id="bookBtn">
+        <i class="fas fa-calendar-check"></i> <span id="bookText">Book Now</span>
+      </button>
+      <button class="btn btn-secondary" onclick="document.getElementById('services').scrollIntoView({behavior: 'smooth'})" id="servicesBtn">
+        <i class="fas fa-tools"></i> <span id="servicesText">Our Services</span>
+      </button>
+    </div>
+  </section>
+  
+  <!-- Services -->
+  <section class="services" id="services">
+    <h2 class="section-title" id="servicesTitle">Our Services</h2>
+    <div class="services-grid" id="servicesGrid"></div>
+  </section>
+  
+  <!-- Gallery -->
+  <section class="gallery">
+    <h2 class="section-title" id="galleryTitle">Our Gallery</h2>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </section>
+  
+  <!-- Reviews -->
+  <section class="reviews">
+    <h2 class="section-title" id="reviewsTitle">Customer Reviews</h2>
+    <div class="reviews-container">
+      <div id="reviewsList"></div>
+      <button class="add-review-btn" onclick="showReviewModal()" id="addReviewBtn">
+        <i class="fas fa-star"></i> <span id="addReviewText">Add Your Review</span>
+      </button>
+    </div>
+  </section>
+  
+  <!-- Google Map -->
+  <section class="map">
+    <h2 class="section-title" id="mapTitle">Our Location</h2>
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12095.4!2d23.4!3d23.4!4m2!3m1!1s0x0:0x0!5e1!1e2!2b1!3e3!6m1!1e1!8m2!3d23.4!4d120.95!15sCg0yMy40LDEyMC45NTrkAa9lbGVjdHJpY2lhbiIkGhIQbWtfcGVyc29uX25hbWV9a2V5OtABN2" 
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer>
+    <p id="footerText">© 2026 It'z Kushal Electric. All rights reserved.</p>
+    <div class="contact">
+      <i class="fas fa-phone"></i> <span id="phoneText">Call: +91 XXXXXXXXXX</span>
+    </div>
+  </footer>
+  
+  <!-- WhatsApp Button -->
+  <div class="whatsapp-btn" onclick="window.open('https://wa.me/910000000000', '_blank')">
+    <i class="fas fa-whatsapp"></i>
+  </div>
+  
+  <!-- Booking Modal -->
+  <div class="booking-modal" id="bookingModal">
+    <div class="booking-content">
+      <button class="close-book" onclick="closeBooking()">&times;</button>
+      <h2 id="bookingTitle">Book Our Service</h2>
+      <form id="bookingForm" onsubmit="submitBooking()">
+        <div class="form-group">
+          <label id="nameLabel">Your Name</label>
+          <input type="text" id="name" required placeholder="Enter your name" />
+        </div>
+        <div class="form-group">
+          <label id="phoneLabel">Phone Number</label>
+          <input type="tel" id="phone" required placeholder="+91 XXXXXXXXXX" />
+        </div>
+        <div class="form-group">
+          <label id="serviceLabel">Service</label>
+          <select id="service" required>
+            <option value="">Select Service</option>
+            <option value="CCTV Installation">CCTV Installation</option>
+            <option value="CCTV Repair">CCTV Repair</option>
+            <option value="NVR Installation">NVR Installation</option>
+            <option value="AC Installation">AC Installation</option>
+            <option value="AC Wiring">AC Wiring</option>
+            <option value="Home Wiring">Home Wiring</option>
+            <option value="Electric Repair">Electric Repair</option>
+            <option value="Switch & Socket">Switch & Socket</option>
+            <option value="Light Repair">Light Repair</option>
+            <option value="AMC Service">AMC Service</option>
+            <option value="Geyser Wiring">Geyser Wiring</option>
+            <option value="Electrical Wiring">Electrical Wiring</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label id="addressLabel">Address</label>
+          <textarea id="address" required placeholder="Enter your address"></textarea>
+        </div>
+        <div class="form-group">
+          <label id="dateLabel">Preferred Date</label>
+          <input type="date" id="date" required />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%" id="submitBtn">
+          <i class="fas fa-paper-plane"></i> <span id="submitText">Submit Booking</span>
+        </button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Review Modal -->
+  <div class="review-modal" id="reviewModal">
+    <div class="review-content">
+      <h2 id="reviewModalTitle">Add Your Review</h2>
+      <div class="star-rating">
+        <span class="star" onclick="setStar(1)"><i class="fas fa-star"></i></span>
+        <span class="star" onclick="setStar(2)"><i class="fas fa-star"></i></span>
+        <span class="star" onclick="setStar(3)"><i class="fas fa-star"></i></span>
+        <span class="star" onclick="setStar(4)"><i class="fas fa-star"></i></span>
+        <span class="star" onclick="setStar(5)"><i class="fas fa-star"></i></span>
+      </div>
+      <div class="form-group">
+        <label id="reviewNameLabel">Your Name</label>
+        <input type="text" id="reviewName" placeholder="Enter your name" />
+      </div>
+      <div class="form-group">
+        <label id="reviewTextLabel">Your Review</label>
+        <textarea id="reviewText" placeholder="Write your review" style="min-height: 100px;"></textarea>
+      </div>
+      <button class="close-review" onclick="submitReview()" id="submitReviewBtn">
+        <i class="fas fa-paper-plane"></i> <span id="submitReviewText">Submit Review</span>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Photo Modal -->
+  <div class="photo-modal" id="photoModal">
+    <button class="close-photo" onclick="closePhoto()">&times;</button>
+    <img id="modalImg" src="" alt="Gallery Photo" />
+  </div>
+  
+  <script>
+    // ===== JavaScript Starts Here =====
+    
+    // Translation
+    const T = {
+      en: {
+        brand: "It'z Kushal Electric",
+        lang: "বাংলা",
+        heroTitle: "Your <span>TRUSTED</span> Professional Electrician",
+        heroDesc: "Professional electrician services for home & office wiring, AC installation, CCTV, and more",
+        bookBtn: "Book Now",
+        servicesBtn: "Our Services",
+        servicesTitle: "Our Services",
+        galleryTitle: "Our Gallery",
+        reviewsTitle: "Customer Reviews",
+        addReviewBtn: "<i class='fas fa-star'></i> Add Your Review",
+        mapTitle: "Our Location",
+        footerText: "© 2026 It'z Kushal Electric. All rights reserved.",
+        phoneText: "Call: +91 XXXXXXXXXX",
+        bookingTitle: "Book Our Service",
+        nameLabel: "Your Name",
+        phoneLabel: "Phone Number",
+        serviceLabel: "Service",
+        addressLabel: "Address",
+        dateLabel: "Preferred Date",
+        submitText: "Submit Booking",
+        reviewModalTitle: "Add Your Review",
+        reviewNameLabel: "Your Name",
+        reviewTextLabel: "Your Review",
+        submitReviewText: "Submit Review"
+      },
+      bn: {
+        brand: "ইট্জ কুশাল ইলেক্ট্রিক",
+        lang: "ENGLISH",
+        heroTitle: "আপনার <span>নির্ভরযোগ্য</span> প্রফেশনাল ইলেক্ট্রিশিয়ান",
+        heroDesc: "হোম ও অফিস ওয়্যারিং, AC ইনস্টলেশন, CCTV এবং আরও প্রফেশনাল ইলেক্ট্রিশিয়ান সার্ভিস",
+        bookBtn: "বুক করুন",
+        servicesBtn: "আমাদের সার্ভিস",
+        servicesTitle: "আমাদের সার্ভিস",
+        galleryTitle: "আমাদের গ্যালারি",
+        reviewsTitle: "কাস্টমার রিভিউ",
+        addReviewBtn: "<i class='fas fa-star'></i> আপনার রিভিউ দিন",
+        mapTitle: "আমার লোকেশন",
+        footerText: "© 2026 ইট্জ কুশাল ইলেক্ট্রিক. সর্বস্বত্ব সংরক্ষিত.",
+        phoneText: "কল: +91 XXXXXXXXXX",
+        bookingTitle: "আমার সার্ভিস বুক করুন",
+        nameLabel: "আপনার নাম",
+        phoneLabel: "ফোন নম্বর",
+        serviceLabel: "সার্ভিস",
+        ad
