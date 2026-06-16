@@ -1,179 +1,240 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Booking System</title>
+<?php
+/*
+Plugin Name: It'z Kushal Customer Panel
+Description: Customer panel only for WordPress with yellow-black theme.
+Version: 1.0
+Author: It'z Kushal Electric
+*/
 
-<style>
-body{
-  margin:0;
-  font-family:Arial;
-  background:#0f172a;
-  color:white;
+if (!defined('ABSPATH')) exit;
+
+function ikcp_enqueue_assets() {
+    wp_register_style('ikcp-style', false);
+    wp_enqueue_style('ikcp-style');
+
+    $css = '
+    .ikcp-wrap{max-width:480px;margin:0 auto;padding:12px;background:#000;color:#fff;min-height:100vh;font-family:Arial,sans-serif}
+    .ikcp-header,.ikcp-hero,.ikcp-section,.ikcp-box,.ikcp-modal-box{background:#111;border:1px solid #ffd700;border-radius:16px;padding:16px;margin-bottom:14px}
+    .ikcp-brand{color:#ffd700;font-size:20px;font-weight:bold;text-align:center}
+    .ikcp-brand span{color:#fff}
+    .ikcp-hero h2,.ikcp-section h3{color:#ffd700;margin-bottom:10px}
+    .ikcp-actions,.ikcp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .ikcp-btn,.ikcp-submit{background:#ffd700;color:#000;border:none;border-radius:12px;padding:12px;font-weight:bold;cursor:pointer;text-decoration:none;text-align:center;display:inline-block}
+    .ikcp-call{background:#000;color:#ffd700;border:1px solid #ffd700}
+    .ikcp-card{background:#1a1a1a;border:1px solid #ffd700;border-radius:12px;padding:16px;text-align:center;cursor:pointer}
+    .ikcp-form input,.ikcp-form select,.ikcp-form textarea{width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1px solid #ffd700;background:#000;color:#fff}
+    .ikcp-form textarea{min-height:90px;resize:none}
+    .ikcp-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+    .ikcp-gallery img{width:100%;height:140px;object-fit:cover;border-radius:12px;border:1px solid #ffd700}
+    .ikcp-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);align-items:center;justify-content:center;z-index:9999}
+    .ikcp-modal-box{max-width:320px;text-align:center}
+    .ikcp-review{background:#111;border:1px solid #ffd700;border-radius:12px;padding:12px;margin-top:10px}
+    .ikcp-small{color:#ccc;font-size:13px}
+    ';
+    wp_add_inline_style('ikcp-style', $css);
+
+    wp_register_script('ikcp-script', false, array(), '1.0', true);
+    wp_enqueue_script('ikcp-script');
+
+    $js = <<<JS
+document.addEventListener('DOMContentLoaded', function(){
+    ikcpInit();
+});
+
+let ikcpDB = {
+    bookings: [],
+    reviews: [],
+    gallery: []
+};
+
+function ikcpSave() {
+    localStorage.setItem('ikcpDB', JSON.stringify(ikcpDB));
 }
 
-.container{
-  max-width:600px;
-  margin:auto;
-  padding:20px;
+function ikcpLoad() {
+    const raw = localStorage.getItem('ikcpDB');
+    if (raw) {
+        try { ikcpDB = JSON.parse(raw); } catch(e) {}
+    }
 }
 
-.card{
-  background:#1e293b;
-  padding:20px;
-  border-radius:10px;
-  margin-top:15px;
+function ikcpInit() {
+    ikcpLoad();
+    ikcpRenderReviews();
+    ikcpRenderGallery();
 }
 
-h1{
-  text-align:center;
+function ikcpToggleReviews() {
+    const box = document.getElementById('ikcpReviewBox');
+    if (!box) return;
+    box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    ikcpRenderReviews();
 }
 
-input, textarea{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  border:none;
-  border-radius:5px;
+function ikcpBookNow(service) {
+    const work = document.getElementById('ikcp_b_work');
+    if (work) work.value = service;
+    document.getElementById('ikcpBookingPage').scrollIntoView({behavior:'smooth'});
 }
 
-button{
-  width:100%;
-  padding:12px;
-  margin-top:15px;
-  background:#22c55e;
-  color:white;
-  border:none;
-  border-radius:5px;
-  font-size:16px;
-  cursor:pointer;
+function ikcpCloseModal() {
+    const m = document.getElementById('ikcpThankYou');
+    if (m) m.style.display = 'none';
 }
 
-.service{
-  color:#38bdf8;
-  font-size:18px;
-  text-align:center;
-}
-</style>
-
-</head>
-<body>
-
-<div class="container">
-
-<h1>Book Your Service</h1>
-
-<!-- SERVICE DISPLAY -->
-<div class="card">
-  <div>Selected Service:</div>
-  <div class="service" id="serviceName">Loading...</div>
-</div>
-
-<!-- SMART SUGGESTION -->
-<div class="card">
-  <h3>Smart Service Suggestion</h3>
-  <div id="suggestion">Type your problem...</div>
-</div>
-
-<!-- FORM -->
-<div class="card">
-  <input id="name" placeholder="Your Name">
-  <input id="phone" placeholder="Phone Number">
-  <input id="address" placeholder="Address">
-
-  <textarea id="problem" placeholder="Describe your problem"
-  oninput="getSuggestion()"></textarea>
-
-  <button onclick="sendBooking()">Confirm Booking</button>
-</div>
-
-</div>
-
-<script>
-
-//
-// 1. GET SERVICE FROM URL
-//
-const params = new URLSearchParams(window.location.search);
-const service = params.get("service") || "General Service";
-
-document.getElementById("serviceName").innerText = service;
-
-//
-// 2. SMART SUGGESTION ENGINE
-//
-function getSuggestion(){
-  let text = document.getElementById("problem").value.toLowerCase();
-  let suggestion = "General Electrical Service";
-
-  if(text.includes("ac")){
-    suggestion = "AC Repair / Installation Service";
-  }
-  else if(text.includes("fan")){
-    suggestion = "Fan Repair Service";
-  }
-  else if(text.includes("cctv") || text.includes("camera")){
-    suggestion = "CCTV Installation Service";
-  }
-  else if(text.includes("wire") || text.includes("short")){
-    suggestion = "Electrical Wiring Repair";
-  }
-  else if(text.includes("light")){
-    suggestion = "Lighting Installation Service";
-  }
-  else if(text.includes("motor") || text.includes("pump")){
-    suggestion = "Water Pump Service";
-  }
-
-  document.getElementById("suggestion").innerText = suggestion;
+function ikcpAddBooking(e) {
+    e.preventDefault();
+    const booking = {
+        name: document.getElementById('ikcp_b_name').value.trim(),
+        phone: document.getElementById('ikcp_b_phone').value.trim(),
+        location: document.getElementById('ikcp_b_location').value.trim(),
+        work: document.getElementById('ikcp_b_work').value.trim(),
+        date: document.getElementById('ikcp_b_date').value,
+        time: document.getElementById('ikcp_b_time').value,
+        caption: document.getElementById('ikcp_b_caption').value.trim(),
+        createdAt: new Date().toLocaleString()
+    };
+    ikcpDB.bookings.unshift(booking);
+    ikcpSave();
+    e.target.reset();
+    document.getElementById('ikcpThankYou').style.display = 'flex';
 }
 
-//
-// 3. SEND BOOKING (TO BACKEND)
-//
-function sendBooking(){
-
-  let name = document.getElementById("name").value;
-  let phone = document.getElementById("phone").value;
-  let address = document.getElementById("address").value;
-  let problem = document.getElementById("problem").value;
-  let suggestion = document.getElementById("suggestion").innerText;
-
-  if(!name || !phone || !address || !problem){
-    alert("Please fill all fields!");
-    return;
-  }
-
-  // 🔥 CHANGE THIS URL AFTER DEPLOY
-  const API_URL = "https://YOUR-RENDER-URL.onrender.com/api/book";
-
-  fetch(API_URL,{
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json"
-    },
-    body:JSON.stringify({
-      service,
-      name,
-      phone,
-      address,
-      problem,
-      suggestion
-    })
-  })
-  .then(res=>res.json())
-  .then(data=>{
-    alert("Booking Saved Successfully 🚀");
-  })
-  .catch(err=>{
-    alert("Error saving booking!");
-    console.log(err);
-  });
-
+function ikcpAddReview() {
+    const name = document.getElementById('ikcp_r_name').value.trim();
+    const rating = document.getElementById('ikcp_r_rating').value;
+    const text = document.getElementById('ikcp_r_text').value.trim();
+    if (!name || !text) return alert('Please enter name and review');
+    ikcpDB.reviews.unshift({ name, rating, text, createdAt: new Date().toLocaleString() });
+    document.getElementById('ikcp_r_name').value = '';
+    document.getElementById('ikcp_r_rating').value = '5';
+    document.getElementById('ikcp_r_text').value = '';
+    ikcpSave();
+    ikcpRenderReviews();
 }
 
-</script>
+function ikcpRenderReviews() {
+    const box = document.getElementById('ikcpReviewsList');
+    if (!box) return;
+    box.innerHTML = ikcpDB.reviews.length ? ikcpDB.reviews.map(r => `
+        <div class="ikcp-review">
+            <strong style="color:#ffd700">${r.name}</strong>
+            <div>${'⭐'.repeat(Number(r.rating))}</div>
+            <p>${r.text}</p>
+        </div>
+    `).join('') : '<p class="ikcp-small">No reviews yet</p>';
+}
 
-</body>
-</html>
+function ikcpRenderGallery() {
+    const box = document.getElementById('ikcpGalleryList');
+    if (!box) return;
+    box.innerHTML = ikcpDB.gallery.length ? ikcpDB.gallery.map(g => `
+        <img src="${g.url}" alt="Gallery">
+    `).join('') : '<p class="ikcp-small">No gallery photos yet</p>';
+}
+
+window.ikcpToggleReviews = ikcpToggleReviews;
+window.ikcpBookNow = ikcpBookNow;
+window.ikcpCloseModal = ikcpCloseModal;
+window.ikcpAddBooking = ikcpAddBooking;
+window.ikcpAddReview = ikcpAddReview;
+JS;
+
+    wp_add_inline_script('ikcp-script', $js);
+}
+add_action('wp_enqueue_scripts', 'ikcp_enqueue_assets');
+
+function ikcp_shortcode_html() {
+    ob_start(); ?>
+    <div class="ikcp-wrap">
+        <div class="ikcp-header">
+            <div class="ikcp-brand">⚡ It'z <span>Kushal</span> Electric ⚡</div>
+        </div>
+
+        <div class="ikcp-hero">
+            <img src="https://itzkushalelectric.kesug.com/wp-content/uploads/2026/06/IMG_20260612_110904-scaled.png" style="width:100%;height:260px;object-fit:cover;border-radius:14px;border:1px solid #ffd700;margin-bottom:12px" alt="Hero">
+            <h2>⚡ Electrical Work & Services</h2>
+            <p>Professional electrical services. Safe, reliable, and fast.</p>
+        </div>
+
+        <div class="ikcp-actions">
+            <a class="ikcp-btn ikcp-call" href="tel:+916289214238">📞 Call</a>
+            <a class="ikcp-btn" href="https://wa.me/916289214238">💬 WhatsApp</a>
+            <a class="ikcp-btn" href="mailto:itzkushalofficial@gmail.com">✉️ Email</a>
+        </div>
+
+        <div class="ikcp-section">
+            <h3>Popular Services</h3>
+            <div class="ikcp-grid">
+                <div class="ikcp-card" onclick="ikcpBookNow('Electrical Wiring')"><img src="https://i.ibb.co/qLK0C06M/your-image-file.jpg" style="width:56px;height:56px;object-fit:cover;margin-bottom:8px"><div>Electrical Wiring</div></div>
+                <div class="ikcp-card" onclick="ikcpBookNow('AC Install')"><img src="https://i.ibb.co/PsF1xmFk/your-image-file.jpg" style="width:56px;height:56px;object-fit:cover;margin-bottom:8px"><div>AC Install</div></div>
+                <div class="ikcp-card" onclick="ikcpBookNow('Geyser Wiring')"><img src="https://i.ibb.co/Z69gpPW9/your-image-file.jpg" style="width:56px;height:56px;object-fit:cover;margin-bottom:8px"><div>Geyser Wiring</div></div>
+            </div>
+        </div>
+
+        <div class="ikcp-section" onclick="ikcpToggleReviews()" style="cursor:pointer">
+            <h3>Customer Reviews</h3>
+            <p>Tap here to write and view reviews</p>
+        </div>
+
+        <div class="ikcp-box" id="ikcpReviewBox" style="display:none">
+            <h3>Write a Review</h3>
+            <input type="text" id="ikcp_r_name" placeholder="Your Name">
+            <select id="ikcp_r_rating">
+                <option value="5">⭐⭐⭐⭐⭐ 5 Stars</option>
+                <option value="4">⭐⭐⭐⭐ 4 Stars</option>
+                <option value="3">⭐⭐⭐ 3 Stars</option>
+                <option value="2">⭐⭐ 2 Stars</option>
+                <option value="1">⭐ 1 Star</option>
+            </select>
+            <textarea id="ikcp_r_text" placeholder="Write your review..."></textarea>
+            <button type="button" class="ikcp-submit" onclick="ikcpAddReview()">Add Review</button>
+            <div id="ikcpReviewsList"></div>
+        </div>
+
+        <div class="ikcp-section" id="ikcpBookingPage">
+            <h3>Book Service</h3>
+            <form class="ikcp-form" onsubmit="ikcpAddBooking(event)">
+                <input type="text" id="ikcp_b_name" placeholder="Customer Name" required>
+                <input type="tel" id="ikcp_b_phone" placeholder="Phone Number" required>
+                <input type="text" id="ikcp_b_location" placeholder="Location" required>
+                <select id="ikcp_b_work" required>
+                    <option value="">Select Service</option>
+                    <option>Electrical Wiring</option>
+                    <option>CCTV Installation</option>
+                    <option>CCTV Repairing</option>
+                    <option>NVR Installation</option>
+                    <option>AC Wiring</option>
+                    <option>AC Installation</option>
+                    <option>Home Wiring</option>
+                    <option>Geyser Wiring</option>
+                    <option>Electric Repairing</option>
+                    <option>Switch & Socket</option>
+                    <option>Light Repair</option>
+                    <option>Annual Maintenance (AMC)</option>
+                </select>
+                <input type="date" id="ikcp_b_date" required>
+                <input type="time" id="ikcp_b_time" required>
+                <textarea id="ikcp_b_caption" placeholder="Caption (Optional)"></textarea>
+                <button class="ikcp-submit" type="submit">Book Now</button>
+            </form>
+        </div>
+
+        <div class="ikcp-section">
+            <h3>Gallery</h3>
+            <div class="ikcp-gallery" id="ikcpGalleryList"></div>
+        </div>
+
+        <div class="ikcp-modal" id="ikcpThankYou">
+            <div class="ikcp-modal-box">
+                <h2 style="color:#ffd700">Thank You!</h2>
+                <p>Your booking has been received successfully.</p>
+                <button class="ikcp-btn" onclick="ikcpCloseModal()">Close</button>
+            </div>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('itz_kushal_customer', 'ikcp_shortcode_html');
+
